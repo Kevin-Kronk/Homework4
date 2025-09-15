@@ -6,5 +6,30 @@ editor_options:
   chunk_output_type: inline
 ---
 
+## Task 1: Conceptual Questions
 
-Answers go here!
+1.  If your working directory is myfolder/homework/ , what relative path would you specify to get the file located at myfolder/MyData.csv?
+
+    > We would use ../MyData.csv
+
+2.  What are the major benefits of using R projects?
+
+    > R projects allow for a separate environment and directory for all of the code and files that pertain to one particular analysis. This keeps your files organized and separated. Additionally, the project can be connected through git to a GitHub repo, so that the files can not only be saved on your local machine, but also in remote storage. The folder that houses the project also gets set as the working directory, so if the project is shared with someone else the relative file paths will still work.
+
+3.  What is git and what is github?
+
+    > Git is a version control software that allows you to take "snapshots" of your work, so that it is saved on your local machine and the history of those changes can be seen and accessed. If something happens you can also revert back to a previous commit. It makes it easier to work on a project with others where you can both work on separate branches and then pull and merge each others changes. GitHub is a hosting service that allows us to store code and files remotely. Git can be used to push changes from your local machine to the remote repo, or to pull from the remote repo. This is important because now multiple people using different machines can work on the same project and have a safe place to store the project as they collaborate and make changes.
+
+4.  What are the two main differences between a tibble and a data.frame?
+
+    > A tibble gives a fancy version of the printed output that looks better, gives some metadata like column data types and number of rows, and doesn't clog up the work space. Additionally, almost all tidyverse functions are built to work on a tibble, with them having similar syntax too. Tibbles don't coerce down to a vector when you subset one column using \[.
+
+5.  Rewrite the following nested function call using BaseR's chaining operator:
+
+    > as_tibble(iris) \|\>
+    >
+    > select(starts_with("Petal"), Species) \|\>
+    >
+    > filter(Petal.Length \< 1.55) \|\>
+    >
+    > arrange(Species)
