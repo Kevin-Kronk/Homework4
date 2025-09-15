@@ -15,15 +15,21 @@ library(tidyverse)
 
 ### Glass Data
 
+1.  Read this data into R directly from the URL using functions from the tidyverse. Add column names. Print out the tibble.
+
 ```{r}
 data_connection <- "https://www4.stat.ncsu.edu/online/datasets/glass.data"
 columns <- c("Id", "RI", "Na", "Mg", "Al", "Si", 
              "K", "Ca", "Ba", "Fe", "Glass_Type")
+# Read in a comma delimited file
 glass_data <- read_csv(data_connection,
                        col_names = columns)
 
 glass_data
 ```
+
+2.  Start a chain that overwrites the Glass_Type variable using mutate(). Create a character string version using ifelse().
+3.  Continue your chain and keep only observations where the Fe variable is less than 0.2 and the Type of Glass is either "tableware" or "headlamps".
 
 ```{r}
 # Make a function to perform the conversion, for ease of viewing the code
@@ -39,10 +45,42 @@ glass_type_convert <- function(col) {
                                                   "unknown")))))))
 }
 
-# Convert Glass_Type variable from numbers to character strings, then filter
+# Convert Glass_Type variable from numbers to strings to factors, then filter
 glass_data_filtered <- glass_data |>
   mutate(Glass_Type = as.factor(glass_type_convert(Glass_Type))) |>
   filter(Fe < 0.2, Glass_Type %in% c("tableware", "headlamps"))
 
 glass_data_filtered
+```
+
+### Yeast Data
+
+1.  Read this data into R directly from the URL using functions from the tidyverse. Add column names. Print out the tibble.
+
+```{r}
+data_connection <- "https://www4.stat.ncsu.edu/online/datasets/yeast.data"
+# Read in fixed width field data
+yeast_data <- read_fwf(data_connection,
+                       col_positions = fwf_widths(c(12, 6, 6, 6, 6, 
+                                                    6, 6, 6, 6, 3),
+                                                  c("seq_name", "mcg", "gvh",
+                                                    "alm", "mit", "erl", "pox",
+                                                    "vac", "nuc", "class")))
+
+yeast_data
+```
+
+2.  Start a chain that removes the seq_name and nuc columns.
+3.  Continue your chain to add columns corresponding to the mean and median of each numeric variable at each class grouping.
+
+```{r}
+yeast_data_expanded <- yeast_data |>
+  # Remove seq_name and nuc
+  select(-c("seq_name", "nuc")) |>
+  group_by(class) |>
+  # Create column for mean and median of each numeric variable grouped by class
+  mutate(across(where(is.numeric), list(mean = mean, median = median), 
+                .names= "{.col}_{.fn}"))
+
+yeast_data_expanded
 ```
