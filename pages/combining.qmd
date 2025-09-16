@@ -6,4 +6,69 @@ editor_options:
   chunk_output_type: inline
 ---
 
-Answers go here!
+## Task 3: Combining Excel and Delimited Data
+
+```{r}
+# Import packages
+library(readxl)
+library(readr)
+```
+
+### Wine Data
+
+1.  Download the excel file and place it in the working directory. Import the data from the first sheet using the readxl package and print out the tibble.
+
+```{r}
+white_wine_data <- read_excel("../white-wine.xlsx",
+                              sheet = excel_sheets("../white-wine.xlsx")[1])
+
+white_wine_data
+```
+
+2.  Change the non-standard variable names to the ones found in sheet 2 of the excel file. Do so by overwriting the current column names with the column of new names.
+
+```{r}
+# Load in the second sheet of the excel file
+wine_variable_names <- read_excel("../white-wine.xlsx",
+                                  sheet = excel_sheets("../white-wine.xlsx")[2])
+
+wine_variable_names
+```
+
+```{r}
+# Replace the non-standard column names with the new ones
+colnames(white_wine_data) <- wine_variable_names$Variables
+
+colnames(white_wine_data)
+```
+
+3.  Lastly, add a column to this data set to indicate the wines are white.
+
+```{r}
+# Add column of wine type by repeating "white" for all rows in the tibble
+white_wine_data$wine_type <- rep("white", nrow(white_wine_data))
+
+white_wine_data
+```
+
+4.  Read in the semi-colon delimited version of the red wine data set using the readr package. Be careful that the columns are read in as the correct type! Replace the variable names as done above. Append a column denoting the type as "red".
+
+```{r}
+# Read in ; delimited data, specifying the 12 column data types
+red_wine_data <- read_csv2("../red-wine.csv",
+                           col_types = "nnnnnnnnnnnn")
+
+# Use the variable names from the white wine excel sheet to update the col names
+colnames(red_wine_data) <- wine_variable_names$Variables
+
+# Add column of wine type by repeating "red" for all rows in the tibble
+red_wine_data$wine_type <- rep("red", nrow(red_wine_data))
+
+red_wine_data
+```
+
+5.  Combine these two data sets into one data set. They both have the exact same columns so this is an easy append task! Use the dplyr::bind_rows() function to create one tibble containing all of the wine data.
+
+```{r}
+
+```

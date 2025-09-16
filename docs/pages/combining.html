@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -159,8 +193,17 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#task-3-combining-excel-and-delimited-data" id="toc-task-3-combining-excel-and-delimited-data" class="nav-link active" data-scroll-target="#task-3-combining-excel-and-delimited-data">Task 3: Combining Excel and Delimited Data</a>
+  <ul class="collapse">
+  <li><a href="#wine-data" id="toc-wine-data" class="nav-link" data-scroll-target="#wine-data">Wine Data</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -190,9 +233,154 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Answers go here!</p>
+<section id="task-3-combining-excel-and-delimited-data" class="level2">
+<h2 class="anchored" data-anchor-id="task-3-combining-excel-and-delimited-data">Task 3: Combining Excel and Delimited Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="wine-data" class="level3">
+<h3 class="anchored" data-anchor-id="wine-data">Wine Data</h3>
+<ol type="1">
+<li>Download the excel file and place it in the working directory. Import the data from the first sheet using the readxl package and print out the tibble.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>white_wine_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../white-wine.xlsx"</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">sheet =</span> <span class="fu">excel_sheets</span>(<span class="st">"../white-wine.xlsx"</span>)[<span class="dv">1</span>])</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>white_wine_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4,898 × 12
+   `fixed acidity` `volatile acidity` `citric acid` `residual sugar` chlorides
+             &lt;dbl&gt;              &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;     &lt;dbl&gt;
+ 1               7               0.27          0.36             20.7     0.045
+ 2              63               0.3           0.34              1.6     0.049
+ 3              81               0.28          0.4               6.9     0.05 
+ 4              72               0.23          0.32              8.5     0.058
+ 5              72               0.23          0.32              8.5     0.058
+ 6              81               0.28          0.4               6.9     0.05 
+ 7              62               0.32          0.16              7       0.045
+ 8               7               0.27          0.36             20.7     0.045
+ 9              63               0.3           0.34              1.6     0.049
+10              81               0.22          0.43              1.5     0.044
+# ℹ 4,888 more rows
+# ℹ 7 more variables: `free sulfur dioxide` &lt;dbl&gt;,
+#   `total sulfur dioxide` &lt;dbl&gt;, density &lt;dbl&gt;, pH &lt;dbl&gt;, sulphates &lt;dbl&gt;,
+#   alcohol &lt;dbl&gt;, quality &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Change the non-standard variable names to the ones found in sheet 2 of the excel file. Do so by overwriting the current column names with the column of new names.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load in the second sheet of the excel file</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>wine_variable_names <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../white-wine.xlsx"</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">sheet =</span> <span class="fu">excel_sheets</span>(<span class="st">"../white-wine.xlsx"</span>)[<span class="dv">2</span>])</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>wine_variable_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 1
+   Variables           
+   &lt;chr&gt;               
+ 1 fixed_acidity       
+ 2 volatile_acidity    
+ 3 citric_acid         
+ 4 residual_sugar      
+ 5 chlorides           
+ 6 free_sulfur_dioxide 
+ 7 total_sulfur_dioxide
+ 8 density             
+ 9 pH                  
+10 sulphates           
+11 alcohol             
+12 quality             </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace the non-standard column names with the new ones</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(white_wine_data) <span class="ot">&lt;-</span> wine_variable_names<span class="sc">$</span>Variables</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(white_wine_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "fixed_acidity"        "volatile_acidity"     "citric_acid"         
+ [4] "residual_sugar"       "chlorides"            "free_sulfur_dioxide" 
+ [7] "total_sulfur_dioxide" "density"              "pH"                  
+[10] "sulphates"            "alcohol"              "quality"             </code></pre>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Lastly, add a column to this data set to indicate the wines are white.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add column of wine type by repeating "white" for all rows in the tibble</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>white_wine_data<span class="sc">$</span>wine_type <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"white"</span>, <span class="fu">nrow</span>(white_wine_data))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>white_wine_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4,898 × 13
+   fixed_acidity volatile_acidity citric_acid residual_sugar chlorides
+           &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;          &lt;dbl&gt;     &lt;dbl&gt;
+ 1             7             0.27        0.36           20.7     0.045
+ 2            63             0.3         0.34            1.6     0.049
+ 3            81             0.28        0.4             6.9     0.05 
+ 4            72             0.23        0.32            8.5     0.058
+ 5            72             0.23        0.32            8.5     0.058
+ 6            81             0.28        0.4             6.9     0.05 
+ 7            62             0.32        0.16            7       0.045
+ 8             7             0.27        0.36           20.7     0.045
+ 9            63             0.3         0.34            1.6     0.049
+10            81             0.22        0.43            1.5     0.044
+# ℹ 4,888 more rows
+# ℹ 8 more variables: free_sulfur_dioxide &lt;dbl&gt;, total_sulfur_dioxide &lt;dbl&gt;,
+#   density &lt;dbl&gt;, pH &lt;dbl&gt;, sulphates &lt;dbl&gt;, alcohol &lt;dbl&gt;, quality &lt;dbl&gt;,
+#   wine_type &lt;chr&gt;</code></pre>
+</div>
+</div>
+<ol start="4" type="1">
+<li>Read in the semi-colon delimited version of the red wine data set using the readr package. Be careful that the columns are read in as the correct type! Replace the variable names as done above. Append a column denoting the type as “red”.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in ; delimited data, specifying the 12 column data types</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>red_wine_data <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">"../red-wine.csv"</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">col_types =</span> <span class="st">"nnnnnnnnnnnn"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Using "','" as decimal and "'.'" as grouping mark. Use `read_delim()` for more control.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the variable names from the white wine excel sheet to update the col names</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(red_wine_data) <span class="ot">&lt;-</span> wine_variable_names<span class="sc">$</span>Variables</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Add column of wine type by repeating "red" for all rows in the tibble</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>red_wine_data<span class="sc">$</span>wine_type <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"red"</span>, <span class="fu">nrow</span>(red_wine_data))</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>red_wine_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,599 × 13
+   fixed_acidity volatile_acidity citric_acid residual_sugar chlorides
+           &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;          &lt;dbl&gt;     &lt;dbl&gt;
+ 1            74                7           0             19        76
+ 2            78               88           0             26        98
+ 3            78               76           4             23        92
+ 4           112               28          56             19        75
+ 5            74                7           0             19        76
+ 6            74               66           0             18        75
+ 7            79                6           6             16        69
+ 8            73               65           0             12        65
+ 9            78               58           2              2        73
+10            75                5          36             61        71
+# ℹ 1,589 more rows
+# ℹ 8 more variables: free_sulfur_dioxide &lt;dbl&gt;, total_sulfur_dioxide &lt;dbl&gt;,
+#   density &lt;dbl&gt;, pH &lt;dbl&gt;, sulphates &lt;dbl&gt;, alcohol &lt;dbl&gt;, quality &lt;dbl&gt;,
+#   wine_type &lt;chr&gt;</code></pre>
+</div>
+</div>
+<ol start="5" type="1">
+<li>Combine these two data sets into one data set. They both have the exact same columns so this is an easy append task! Use the dplyr::bind_rows() function to create one tibble containing all of the wine data.</li>
+</ol>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
