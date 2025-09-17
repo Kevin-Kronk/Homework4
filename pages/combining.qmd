@@ -86,7 +86,7 @@ wine_data
 wine_data |>
   # Filter the rows
   filter(quality > 6.5 & alcohol < 132) |>
-  # From highest to lowest quality
+  # Sort from highest to lowest quality
   arrange(desc(quality)) |>
   # Keep only the acid based variables, alcohol, type, quality
   select(fixed_acidity:citric_acid, alcohol, wine_type, quality) |>

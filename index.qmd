@@ -6,6 +6,8 @@ editor_options:
   chunk_output_type: inline
 ---
 
-An example pages site with multiple pages and a table of contents.
+ST 558
 
-This could be a landing page for the site. Feel free to put whatever here!
+Kevin Kronk
+
+An example pages site with multiple pages and a table of contents.

@@ -47,7 +47,9 @@ glass_type_convert <- function(col) {
 
 # Convert Glass_Type variable from numbers to strings to factors, then filter
 glass_data_filtered <- glass_data |>
+  # Use function above to convert Glass Type from number to text
   mutate(Glass_Type = as.factor(glass_type_convert(Glass_Type))) |>
+  # Rows must have Fe < 0.2 and either be tableware or headlamps
   filter(Fe < 0.2, Glass_Type %in% c("tableware", "headlamps"))
 
 glass_data_filtered
@@ -61,6 +63,7 @@ glass_data_filtered
 data_connection <- "https://www4.stat.ncsu.edu/online/datasets/yeast.data"
 # Read in fixed width field data
 yeast_data <- read_fwf(data_connection,
+                       # Add widths of each column and the column name
                        col_positions = fwf_widths(c(12, 6, 6, 6, 6, 
                                                     6, 6, 6, 6, 3),
                                                   c("seq_name", "mcg", "gvh",
