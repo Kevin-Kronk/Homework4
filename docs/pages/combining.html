@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-09-15">
+<meta name="dcterms.date" content="2025-09-17">
 
 <title>Combining Excel and Delimited Data – Homework 4 Site</title>
 <style>
@@ -221,7 +221,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2025-09-15</p>
+      <p class="date">2025-09-17</p>
     </div>
   </div>
   
@@ -238,7 +238,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.4     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
 </div>
 <section id="wine-data" class="level3">
 <h3 class="anchored" data-anchor-id="wine-data">Wine Data</h3>
@@ -246,10 +258,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Download the excel file and place it in the working directory. Import the data from the first sheet using the readxl package and print out the tibble.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>white_wine_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../white-wine.xlsx"</span>,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">sheet =</span> <span class="fu">excel_sheets</span>(<span class="st">"../white-wine.xlsx"</span>)[<span class="dv">1</span>])</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>white_wine_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>white_wine_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../white-wine.xlsx"</span>,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">sheet =</span> <span class="fu">excel_sheets</span>(<span class="st">"../white-wine.xlsx"</span>)[<span class="dv">1</span>])</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>white_wine_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4,898 × 12
    `fixed acidity` `volatile acidity` `citric acid` `residual sugar` chlorides
@@ -274,11 +286,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Change the non-standard variable names to the ones found in sheet 2 of the excel file. Do so by overwriting the current column names with the column of new names.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load in the second sheet of the excel file</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>wine_variable_names <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../white-wine.xlsx"</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">sheet =</span> <span class="fu">excel_sheets</span>(<span class="st">"../white-wine.xlsx"</span>)[<span class="dv">2</span>])</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>wine_variable_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load in the second sheet of the excel file</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>wine_variable_names <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../white-wine.xlsx"</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">sheet =</span> <span class="fu">excel_sheets</span>(<span class="st">"../white-wine.xlsx"</span>)[<span class="dv">2</span>])</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>wine_variable_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 1
    Variables           
@@ -298,10 +310,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace the non-standard column names with the new ones</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(white_wine_data) <span class="ot">&lt;-</span> wine_variable_names<span class="sc">$</span>Variables</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(white_wine_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace the non-standard column names with the new ones</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(white_wine_data) <span class="ot">&lt;-</span> wine_variable_names<span class="sc">$</span>Variables</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(white_wine_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "fixed_acidity"        "volatile_acidity"     "citric_acid"         
  [4] "residual_sugar"       "chlorides"            "free_sulfur_dioxide" 
@@ -313,10 +325,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Lastly, add a column to this data set to indicate the wines are white.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add column of wine type by repeating "white" for all rows in the tibble</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>white_wine_data<span class="sc">$</span>wine_type <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"white"</span>, <span class="fu">nrow</span>(white_wine_data))</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>white_wine_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add column of wine type by repeating "white" for all rows in the tibble</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>white_wine_data<span class="sc">$</span>wine_type <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"white"</span>, <span class="fu">nrow</span>(white_wine_data))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>white_wine_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4,898 × 13
    fixed_acidity volatile_acidity citric_acid residual_sugar chlorides
@@ -341,19 +353,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Read in the semi-colon delimited version of the red wine data set using the readr package. Be careful that the columns are read in as the correct type! Replace the variable names as done above. Append a column denoting the type as “red”.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in ; delimited data, specifying the 12 column data types</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>red_wine_data <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">"../red-wine.csv"</span>,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">col_types =</span> <span class="st">"nnnnnnnnnnnn"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in ; delimited data, specifying the 12 column data types</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>red_wine_data <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">"../red-wine.csv"</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">col_types =</span> <span class="st">"nnnnnnnnnnnn"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ Using "','" as decimal and "'.'" as grouping mark. Use `read_delim()` for more control.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the variable names from the white wine excel sheet to update the col names</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(red_wine_data) <span class="ot">&lt;-</span> wine_variable_names<span class="sc">$</span>Variables</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Add column of wine type by repeating "red" for all rows in the tibble</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>red_wine_data<span class="sc">$</span>wine_type <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"red"</span>, <span class="fu">nrow</span>(red_wine_data))</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>red_wine_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the variable names from the white wine excel sheet to update the col names</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(red_wine_data) <span class="ot">&lt;-</span> wine_variable_names<span class="sc">$</span>Variables</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Add column of wine type by repeating "red" for all rows in the tibble</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>red_wine_data<span class="sc">$</span>wine_type <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"red"</span>, <span class="fu">nrow</span>(red_wine_data))</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>red_wine_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,599 × 13
    fixed_acidity volatile_acidity citric_acid residual_sugar chlorides
@@ -377,6 +389,66 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol start="5" type="1">
 <li>Combine these two data sets into one data set. They both have the exact same columns so this is an easy append task! Use the dplyr::bind_rows() function to create one tibble containing all of the wine data.</li>
 </ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>wine_data <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(white_wine_data, red_wine_data)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>wine_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6,497 × 13
+   fixed_acidity volatile_acidity citric_acid residual_sugar chlorides
+           &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;          &lt;dbl&gt;     &lt;dbl&gt;
+ 1             7             0.27        0.36           20.7     0.045
+ 2            63             0.3         0.34            1.6     0.049
+ 3            81             0.28        0.4             6.9     0.05 
+ 4            72             0.23        0.32            8.5     0.058
+ 5            72             0.23        0.32            8.5     0.058
+ 6            81             0.28        0.4             6.9     0.05 
+ 7            62             0.32        0.16            7       0.045
+ 8             7             0.27        0.36           20.7     0.045
+ 9            63             0.3         0.34            1.6     0.049
+10            81             0.22        0.43            1.5     0.044
+# ℹ 6,487 more rows
+# ℹ 8 more variables: free_sulfur_dioxide &lt;dbl&gt;, total_sulfur_dioxide &lt;dbl&gt;,
+#   density &lt;dbl&gt;, pH &lt;dbl&gt;, sulphates &lt;dbl&gt;, alcohol &lt;dbl&gt;, quality &lt;dbl&gt;,
+#   wine_type &lt;chr&gt;</code></pre>
+</div>
+</div>
+<ol start="6" type="1">
+<li>Start a chain on your new combined data object to filter the data to only look at high-quality wines (quality &gt; 6.5) and wines that have a reasonable alcohol value (alcohol &lt; 132).</li>
+<li>Continue your chain to now sort the data from highest quality to lowest.</li>
+<li>Continue your chain to select only the variables that contain acid, the alcohol variable, the type variable, and the quality variable.</li>
+<li>Continue your chain to add the mean and standard deviation of the alcohol variable to the data set for each setting of the quality variable.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>wine_data <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter the rows</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(quality <span class="sc">&gt;</span> <span class="fl">6.5</span> <span class="sc">&amp;</span> alcohol <span class="sc">&lt;</span> <span class="dv">132</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># From highest to lowest quality</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(quality)) <span class="sc">|&gt;</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Keep only the acid based variables, alcohol, type, quality</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(fixed_acidity<span class="sc">:</span>citric_acid, alcohol, wine_type, quality) <span class="sc">|&gt;</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(quality) <span class="sc">|&gt;</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Find the alcohol mean and sd for each quality value</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(alcohol, <span class="fu">list</span>(<span class="at">mean =</span> mean, <span class="at">sd =</span> sd), <span class="at">.names =</span> <span class="st">"{.col}_{.fn}"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,198 × 8
+# Groups:   quality [3]
+   fixed_acidity volatile_acidity citric_acid alcohol wine_type quality
+           &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;
+ 1            91             0.27        0.45     104 white           9
+ 2            66             0.36        0.29     124 white           9
+ 3            74             0.24        0.36     125 white           9
+ 4            69             0.36        0.34     127 white           9
+ 5            71             0.26        0.49     129 white           9
+ 6            62             0.66        0.48     128 white           8
+ 7            62             0.66        0.48     128 white           8
+ 8            68             0.26        0.42     105 white           8
+ 9            67             0.23        0.31     107 white           8
+10            67             0.23        0.31     107 white           8
+# ℹ 1,188 more rows
+# ℹ 2 more variables: alcohol_mean &lt;dbl&gt;, alcohol_sd &lt;dbl&gt;</code></pre>
+</div>
+</div>
 
 
 </section>

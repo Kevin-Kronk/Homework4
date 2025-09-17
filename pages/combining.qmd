@@ -11,7 +11,7 @@ editor_options:
 ```{r}
 # Import packages
 library(readxl)
-library(readr)
+library(tidyverse)
 ```
 
 ### Wine Data
@@ -70,5 +70,25 @@ red_wine_data
 5.  Combine these two data sets into one data set. They both have the exact same columns so this is an easy append task! Use the dplyr::bind_rows() function to create one tibble containing all of the wine data.
 
 ```{r}
+wine_data <- dplyr::bind_rows(white_wine_data, red_wine_data)
 
+wine_data
+```
+
+6.  Start a chain on your new combined data object to filter the data to only look at high-quality wines (quality \> 6.5) and wines that have a reasonable alcohol value (alcohol \< 132).
+7.  Continue your chain to now sort the data from highest quality to lowest.
+8.  Continue your chain to select only the variables that contain acid, the alcohol variable, the type variable, and the quality variable.
+9.  Continue your chain to add the mean and standard deviation of the alcohol variable to the data set for each setting of the quality variable.
+
+```{r}
+wine_data |>
+  # Filter the rows
+  filter(quality > 6.5 & alcohol < 132) |>
+  # From highest to lowest quality
+  arrange(desc(quality)) |>
+  # Keep only the acid based variables, alcohol, type, quality
+  select(fixed_acidity:citric_acid, alcohol, wine_type, quality) |>
+  group_by(quality) |>
+  # Find the alcohol mean and sd for each quality value
+  mutate(across(alcohol, list(mean = mean, sd = sd), .names = "{.col}_{.fn}"))
 ```
