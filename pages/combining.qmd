@@ -19,6 +19,7 @@ library(tidyverse)
 1.  Download the excel file and place it in the working directory. Import the data from the first sheet using the readxl package and print out the tibble.
 
 ```{r}
+# Select the first sheet in the excel file
 white_wine_data <- read_excel("../white-wine.xlsx",
                               sheet = excel_sheets("../white-wine.xlsx")[1])
 
@@ -70,6 +71,7 @@ red_wine_data
 5.  Combine these two data sets into one data set. They both have the exact same columns so this is an easy append task! Use the dplyr::bind_rows() function to create one tibble containing all of the wine data.
 
 ```{r}
+# Bind the tibbles by row
 wine_data <- dplyr::bind_rows(white_wine_data, red_wine_data)
 
 wine_data
